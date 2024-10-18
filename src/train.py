@@ -76,7 +76,7 @@ def change_dataloader():
                       in_axes=(0, None, None, None, None, None), out_axes=0)
 
 
-def forward(tokens: jnp.ndarray, is_training: bool, gd: bool):
+def forward(tokens: jnp.ndarray, is_training: bool, gd: bool, w0_verification = False):
   """Transformer forward."""
   if config.classic_token_const:
     in_context_length = config.dataset_size*2 + 1
@@ -113,7 +113,7 @@ def forward(tokens: jnp.ndarray, is_training: bool, gd: bool):
       sum_norm=config.sum_norm,
       dampening=config.dampening,
       clip=config.clip,
-      ana_copy=True # changed to True so we can have the full prediction stack
+      ana_copy=w0_verification # changed to True so we can have the full prediction stack
       )
 
   # transformers GD version (constructed)
